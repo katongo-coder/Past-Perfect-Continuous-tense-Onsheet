@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Past Perfect Continuous Assessment - Prepared By Mr. Katongo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f0fdfa; }
+        @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .scrolling-container { width: 100%; overflow: hidden; background: #0d9488; color: white; padding: 12px 0; position: fixed; top: 0; left:0; z-index: 50; white-space: nowrap; }
+        .scrolling-text { display: inline-block; animation: scrollText 15s linear infinite; font-weight: 800; text-transform: uppercase; }
+        @keyframes rotateTitle { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .rotating-section { display: flex; justify-content: center; margin-top: 3rem; margin-bottom: 2rem; }
+        .rotating-text { display: inline-block; animation: rotateTitle 15s linear infinite; transform-origin: center; }
+        .selected { border-color: #0d9488 !important; background-color: #f0fdf4 !important; }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; padding: 0 !important; }
+            .print-card { box-shadow: none !important; border: 1px solid #e2e8f0 !important; border-radius: 0 !important; }
+            .scrolling-container, .rotating-section { display: none !important; }
+        }
+    </style>
+</head>
+<body class="p-4 pt-24 min-h-screen flex flex-col items-center">
+    <div class="scrolling-container no-print">
+        <div class="scrolling-text">Prepared By Mr. Katongo • English Grammar: Past Perfect Continuous • Duration in the Past • Prepared By Mr. Katongo</div>
+    </div>
+
+    <div class="max-w-3xl w-full">
+        <div id="reg-box" class="bg-white p-10 rounded-[40px] shadow-2xl border border-teal-50 no-print">
+            <h2 class="text-2xl font-black text-teal-900 mb-2 uppercase text-center">Past Perfect Continuous Quiz</h2>
+            <p class="text-center font-black text-teal-600 uppercase tracking-[0.2em] text-[13px] mb-8">Grade Seven(7) Quiz &copy; 2026</p>
+            
+            <h2 class="text-xl font-black text-slate-700 mb-6 uppercase">Pupil Registration</h2>
+            <p class="text-xs text-slate-400 mb-4 font-bold uppercase tracking-widest">* Name is required to start</p>
+            
+            <input type="text" id="sName" oninput="validate()" placeholder="Enter Full Name" class="w-full p-4 mb-4 border rounded-2xl outline-none focus:ring-4 focus:ring-teal-100 transition">
+            <input type="text" id="sId" oninput="validate()" placeholder="Enter Pupil ID (Optional)" class="w-full p-4 mb-6 border rounded-2xl outline-none focus:ring-4 focus:ring-teal-100 transition">
+            
+            <button onclick="start()" id="startB" disabled class="w-full bg-teal-600 text-white py-5 rounded-2xl font-black opacity-30 shadow-lg uppercase tracking-widest transition-all">Begin Quiz</button>
+        </div>
+
+        <div id="quiz-box" class="hidden bg-white p-10 rounded-[40px] shadow-2xl border border-teal-50 no-print">
+            <div class="flex justify-between items-center mb-8 border-b pb-4">
+                <div class="bg-teal-50 px-4 py-2 rounded-full border border-teal-100"><span id="timer" class="font-black text-teal-700">00:00</span></div>
+                <span id="prog" class="text-xs font-black text-slate-400 uppercase tracking-widest"></span>
+            </div>
+            <h2 id="qText" class="text-2xl font-bold text-slate-800 mb-10 leading-tight"></h2>
+            <div id="opts" class="space-y-4"></div>
+            <div class="flex justify-end mt-10">
+                <button id="nextB" disabled class="bg-teal-600 text-white px-12 py-4 rounded-2xl font-black shadow-lg disabled:opacity-20 uppercase tracking-widest">Next Question</button>
+            </div>
+        </div>
+
+        <div id="res-box" class="hidden space-y-8">
+            <div class="bg-white p-10 rounded-[40px] shadow-2xl border-b-[12px] border-teal-600 print-card">
+                <h2 class="text-3xl font-black text-slate-800 text-center uppercase mb-1 tracking-tight">Grammar Proficiency Report</h2>
+                <p class="text-center font-black text-teal-600 uppercase tracking-[0.2em] text-[10px] mb-8">English Department - Mr. Katongo</p>
+                
+                <div class="grid grid-cols-2 gap-4 mb-8 bg-slate-50 p-6 rounded-3xl border border-teal-50">
+                    <div><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Pupil Name:</p><p id="rn" class="font-black text-slate-800 text-lg"></p></div>
+                    <div><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Pupil's ID Number:</p><p id="ri" class="font-black text-slate-800 text-lg"></p></div>
+                    <div class="mt-2"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Attempt Number:</p><p id="ra" class="font-black text-teal-600"></p></div>
+                    <div class="mt-2"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Time Taken:</p><p id="rt" class="font-black text-slate-800"></p></div>
+                </div>
+
+                <div class="text-center py-4">
+                    <p class="text-7xl font-black text-teal-600 mb-2"><span id="pct"></span>%</p>
+                    <p class="text-xl font-bold text-slate-700 uppercase">Total Marks: <span id="raw"></span></p>
+                    <p id="grade" class="mt-6 inline-block px-8 py-2 rounded-full font-black text-sm uppercase tracking-widest"></p>
+                    
+                    <p id="auto-status" class="mt-4 text-[10px] font-bold text-slate-400 uppercase italic">Processing The Review and Results...</p>
+                </div>
+
+                <div class="mt-8 p-6 bg-teal-50 rounded-3xl border border-teal-100 italic">
+                    <p class="text-[10px] font-black text-teal-600 uppercase tracking-widest mb-2">Teacher's Remarks:</p>
+                    <p id="remarks" class="text-slate-700 font-semibold"></p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-4 mt-10 no-print">
+                    <button id="submitBtn" onclick="submitToSheets()" class="bg-orange-500 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest shadow-xl hover:bg-orange-600 transition-all">Processing Review...</button>
+                    <button onclick="window.print()" class="bg-teal-600 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest shadow-xl">Print Report / PDF</button>
+                    <button onclick="restart()" class="bg-slate-800 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest shadow-xl">Retake Quiz</button>
+                </div>
+            </div>
+
+            <div class="bg-white p-10 rounded-[40px] shadow-xl border border-teal-50 print-card">
+                <h3 class="text-xl font-black text-slate-800 mb-8 border-b pb-4">Performance Review</h3>
+                <div id="revList" class="space-y-6"></div>
+                <div class="mt-12 pt-8 border-t text-center">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Prepared By Mr. Katongo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="rotating-section no-print">
+        <div class="rotating-text bg-white px-10 py-5 rounded-full shadow-lg border-2 border-teal-50 font-black text-teal-700 uppercase text-xs tracking-widest">Prepared By Mr. Katongo</div>
+    </footer>
+
+    <script>
+        const data = [
+            {
+                "question": "The pupils _______ (wait) for the bus for an hour before it finally arrived.",
+                "correctText": "had been waiting",
+                "rationale": "Focuses on the duration of an ongoing action before a point in the past.",
+                "answerOptions": [
+                    {"text": "was waiting", "isCorrect": false},
+                    {"text": "had been waiting", "isCorrect": true},
+                    {"text": "has been waiting", "isCorrect": false},
+                    {"text": "had waited", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "She was exhausted because she _______ (work) in the garden all morning.",
+                "correctText": "had been working",
+                "rationale": "Shows the cause of a past result (being exhausted) using a continuous action.",
+                "answerOptions": [
+                    {"text": "had been working", "isCorrect": true},
+                    {"text": "was working", "isCorrect": false},
+                    {"text": "had worked", "isCorrect": false},
+                    {"text": "works", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "Mr. Katongo _______ (teach) at the school for ten years before he was promoted.",
+                "correctText": "had been teaching",
+                "rationale": "Highlights the length of time an action had been happening before a milestone.",
+                "answerOptions": [
+                    {"text": "has been teaching", "isCorrect": false},
+                    {"text": "was teaching", "isCorrect": false},
+                    {"text": "had been teaching", "isCorrect": true},
+                    {"text": "had taught", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "How long _______ (you / sleep) before the alarm clock rang?",
+                "correctText": "had you been sleeping",
+                "rationale": "Question form: Had + Subject + been + V-ing.",
+                "answerOptions": [
+                    {"text": "were you sleeping", "isCorrect": false},
+                    {"text": "had you been sleeping", "isCorrect": true},
+                    {"text": "have you been sleeping", "isCorrect": false},
+                    {"text": "had you slept", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "The ground was wet because it _______ (rain) for several hours.",
+                "correctText": "had been raining",
+                "rationale": "Continuous action in the past causing a visible result.",
+                "answerOptions": [
+                    {"text": "had rained", "isCorrect": false},
+                    {"text": "was raining", "isCorrect": false},
+                    {"text": "had been raining", "isCorrect": true},
+                    {"text": "is raining", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "They _______ (play) football for thirty minutes when the rain started.",
+                "correctText": "had been playing",
+                "rationale": "Duration before an interruption (the rain).",
+                "answerOptions": [
+                    {"text": "were playing", "isCorrect": false},
+                    {"text": "had been playing", "isCorrect": true},
+                    {"text": "had played", "isCorrect": false},
+                    {"text": "have been playing", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "He was out of breath because he _______ (run) since the morning.",
+                "correctText": "had been running",
+                "rationale": "Ongoing past action that ended just before or at the time mentioned.",
+                "answerOptions": [
+                    {"text": "had been running", "isCorrect": true},
+                    {"text": "had run", "isCorrect": false},
+                    {"text": "was running", "isCorrect": false},
+                    {"text": "runs", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "The computer _______ (not / work) properly for a week before the technician fixed it.",
+                "correctText": "had not been working",
+                "rationale": "Negative form: had + not + been + V-ing.",
+                "answerOptions": [
+                    {"text": "was not working", "isCorrect": false},
+                    {"text": "has not been working", "isCorrect": false},
+                    {"text": "had not been working", "isCorrect": true},
+                    {"text": "not been working", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "I _______ (study) for hours, so I felt confident about the Science test.",
+                "correctText": "had been studying",
+                "rationale": "Emphasizes the effort and duration before the event.",
+                "answerOptions": [
+                    {"text": "was studying", "isCorrect": false},
+                    {"text": "had been studying", "isCorrect": true},
+                    {"text": "had studied", "isCorrect": false},
+                    {"text": "studied", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "My eyes were sore because I _______ (read) in bad light for a long time.",
+                "correctText": "had been reading",
+                "rationale": "The duration of the action caused the physical symptom.",
+                "answerOptions": [
+                    {"text": "had read", "isCorrect": false},
+                    {"text": "was reading", "isCorrect": false},
+                    {"text": "had been reading", "isCorrect": true},
+                    {"text": "readed", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "They _______ (not / wait) long when the teacher entered the classroom.",
+                "correctText": "had not been waiting",
+                "rationale": "Describes the short duration before the arrival.",
+                "answerOptions": [
+                    {"text": "had not been waiting", "isCorrect": true},
+                    {"text": "were not waiting", "isCorrect": false},
+                    {"text": "had not waited", "isCorrect": false},
+                    {"text": "haven't been waiting", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "The birds _______ (sing) since dawn when the sun finally came up.",
+                "correctText": "had been singing",
+                "rationale": "Action starting at a point (dawn) and continuing to another (sunrise).",
+                "answerOptions": [
+                    {"text": "were singing", "isCorrect": false},
+                    {"text": "had sung", "isCorrect": false},
+                    {"text": "had been singing", "isCorrect": true},
+                    {"text": "have been singing", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "We _______ (drive) for five hours before we saw the sign for Kitwe.",
+                "correctText": "had been driving",
+                "rationale": "Shows progress over time in the past.",
+                "answerOptions": [
+                    {"text": "were driving", "isCorrect": false},
+                    {"text": "had been driving", "isCorrect": true},
+                    {"text": "had driven", "isCorrect": false},
+                    {"text": "drove", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "He _______ (repair) the generator for hours when he finally found the fault.",
+                "correctText": "had been repairing",
+                "rationale": "Continuous labor until a specific past discovery.",
+                "answerOptions": [
+                    {"text": "was repairing", "isCorrect": false},
+                    {"text": "had repaired", "isCorrect": false},
+                    {"text": "had been repairing", "isCorrect": true},
+                    {"text": "repaired", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "The kitchen smelled wonderful because mother _______ (bake) all afternoon.",
+                "correctText": "had been baking",
+                "rationale": "Result in the past (smell) caused by a previous continuous action.",
+                "answerOptions": [
+                    {"text": "had been baking", "isCorrect": true},
+                    {"text": "was baking", "isCorrect": false},
+                    {"text": "had baked", "isCorrect": false},
+                    {"text": "bakes", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "How long _______ (she / live) in the village before she moved to the city?",
+                "correctText": "had she been living",
+                "rationale": "Duration before a permanent change of state.",
+                "answerOptions": [
+                    {"text": "was she living", "isCorrect": false},
+                    {"text": "had she been living", "isCorrect": true},
+                    {"text": "had she lived", "isCorrect": false},
+                    {"text": "has she been living", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "The pupils _______ (practise) their songs for weeks before the concert.",
+                "correctText": "had been practising",
+                "rationale": "Preparation over a long period before a past event.",
+                "answerOptions": [
+                    {"text": "had been practising", "isCorrect": true},
+                    {"text": "were practising", "isCorrect": false},
+                    {"text": "had practised", "isCorrect": false},
+                    {"text": "have been practising", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "I _______ (talk) on the phone for 20 minutes when the battery died.",
+                "correctText": "had been talking",
+                "rationale": "An action in progress for a duration until a sudden stop.",
+                "answerOptions": [
+                    {"text": "was talking", "isCorrect": false},
+                    {"text": "had been talking", "isCorrect": true},
+                    {"text": "had talked", "isCorrect": false},
+                    {"text": "talked", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "They were dirty because they _______ (dig) in the field.",
+                "correctText": "had been digging",
+                "rationale": "Physical state caused by a past continuous activity.",
+                "answerOptions": [
+                    {"text": "were digging", "isCorrect": false},
+                    {"text": "had been digging", "isCorrect": true},
+                    {"text": "had dug", "isCorrect": false},
+                    {"text": "dug", "isCorrect": false}
+                ]
+            },
+            {
+                "question": "Everything was covered in dust because the builders _______ (work).",
+                "correctText": "had been working",
+                "rationale": "The continuous work left a result (dust) in the past.",
+                "answerOptions": [
+                    {"text": "had been working", "isCorrect": true},
+                    {"text": "were working", "isCorrect": false},
+                    {"text": "had worked", "isCorrect": false},
+                    {"text": "work", "isCorrect": false}
+                ]
+            }
+        ];
+
+        let cur = 0, score = 0, history = [], t = 0, tInt, attempts = 0;
+        const iN = document.getElementById('sName'), iI = document.getElementById('sId'), sB = document.getElementById('startB');
+
+        function validate() { 
+            const hasName = iN.value.trim().length > 0;
+            sB.disabled = !hasName;
+            sB.style.opacity = hasName ? '1' : '0.3'; 
+        }
+
+        function start() {
+            attempts++;
+            document.getElementById('reg-box').classList.add('hidden');
+            document.getElementById('quiz-box').classList.remove('hidden');
+            startTimer();
+            show();
+        }
+
+        function startTimer() {
+            clearInterval(tInt);
+            t = 0;
+            tInt = setInterval(() => { 
+                t++; 
+                let m=Math.floor(t/60).toString().padStart(2,'0'), 
+                s=(t%60).toString().padStart(2,'0'); 
+                document.getElementById('timer').innerText = `${m}:${s}`; 
+            }, 1000);
+        }
+
+        function show() {
+            const q = data[cur];
+            document.getElementById('nextB').disabled = true;
+            document.getElementById('prog').innerText = `Question ${cur+1} of ${data.length}`;
+            document.getElementById('qText').innerText = q.question;
+            const oD = document.getElementById('opts'); oD.innerHTML = '';
+            q.answerOptions.forEach(o => {
+                const b = document.createElement('button');
+                b.className = "w-full text-left p-5 border-2 border-slate-100 rounded-3xl font-bold text-slate-700 transition hover:border-teal-300";
+                b.innerText = o.text;
+                b.onclick = () => { 
+                    Array.from(oD.children).forEach(c => c.classList.remove('selected')); 
+                    b.classList.add('selected'); 
+                    b.dataset.c = o.isCorrect; 
+                    b.dataset.t = o.text; 
+                    document.getElementById('nextB').disabled = false; 
+                };
+                oD.appendChild(b);
+            });
+        }
+
+        document.getElementById('nextB').onclick = () => {
+            const sel = document.querySelector('.selected');
+            const isC = sel.dataset.c === "true";
+            if(isC) score++;
+            history.push({ q: data[cur].question, u: sel.dataset.t, c: data[cur].correctText, r: data[cur].rationale, isC });
+            cur++;
+            if(cur < data.length) show(); else finish();
+        };
+
+        function finish() {
+            clearInterval(tInt);
+            document.getElementById('quiz-box').classList.add('hidden');
+            document.getElementById('res-box').classList.remove('hidden');
+            const p = Math.round((score/data.length)*100);
+            
+            let remText = "";
+            if(p === 100) remText = "Incredible! You have mastered the Past Perfect Continuous perfectly. Your understanding of duration in the past is flawless.";
+            else if(p >= 80) remText = "Excellent work. You clearly understand how to use 'had been' with continuous actions. Very well done.";
+            else if(p >= 50) remText = "Good progress. You understand the tense, but remember that it always uses 'had been' regardless of the subject.";
+            else remText = "More study is required. Please review the 'Mr. Katongo's Rationale' section to understand why you missed certain questions.";
+            
+            document.getElementById('pct').innerText = p;
+            document.getElementById('raw').innerText = `${score} / ${data.length}`;
+            document.getElementById('rn').innerText = iN.value;
+            document.getElementById('ri').innerText = iI.value.trim() || "N/A";
+            document.getElementById('ra').innerText = attempts;
+            document.getElementById('rt').innerText = document.getElementById('timer').innerText;
+            document.getElementById('remarks').innerText = remText;
+
+            const g = document.getElementById('grade');
+            g.innerText = p >= 50 ? "RESULT: PASSED" : "RESULT: FAILED";
+            g.className = `mt-6 inline-block px-8 py-2 rounded-full font-black text-sm uppercase tracking-widest ${p>=50?'bg-green-100 text-green-700':'bg-red-100 text-red-700'}`;
+            
+            const list = document.getElementById('revList'); list.innerHTML = '';
+            history.forEach((h, i) => {
+                const d = document.createElement('div');
+                d.className = `p-6 rounded-[30px] border-l-[10px] mb-4 ${h.isC ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}`;
+                d.innerHTML = `
+                    <p class="font-black text-slate-800">${i+1}. ${h.q}</p>
+                    <p class="text-xs mt-3"><b>Your Choice:</b> ${h.u} ${h.isC?'✅':'❌'}</p>
+                    ${!h.isC ? `<p class="text-xs text-green-700"><b>Correct Answer:</b> ${h.c}</p>` : ''}
+                    <div class="mt-4 p-4 bg-white/60 rounded-2xl text-[10px] text-slate-600 border border-slate-100 italic">
+                        <b class="text-teal-600 uppercase tracking-widest block mb-1">Mr. Katongo's Rationale:</b>${h.r}
+                    </div>`;
+                list.appendChild(d);
+            });
+
+            // TRIGGER AUTOMATIC SUBMISSION
+            submitToSheets(true);
+        }
+
+        function submitToSheets(isAuto = false) {
+            const btn = document.getElementById('submitBtn');
+            const statusEl = document.getElementById('auto-status');
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzgT05HBRdUdtZNJMrbs6674BaAqC3NTOpdEIhDJGEQYQb871YIooRED5BwyU4ce-Jl/exec';
+
+            if (!isAuto) {
+                btn.innerText = "Submitting...";
+                btn.disabled = true;
+            }
+
+            const payload = {
+                name: iN.value,
+                sid: iI.value.trim() || "N/A",
+                pct: Math.round((score / data.length) * 100),
+                duration: document.getElementById('timer').innerText,
+                subject: "English - Past Perfect Continuous"
+            };
+
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                if (isAuto) {
+                    statusEl.innerText = "Results Processed successfully ✅";
+                    statusEl.className = "mt-4 text-[10px] font-bold text-green-600 uppercase italic";
+                }
+                btn.innerText = "Performance Review Processed ✅";
+                btn.classList.replace('bg-orange-500', 'bg-green-600');
+                btn.disabled = true;
+            }).catch(error => {
+                console.error("Error:", error);
+                if (isAuto) {
+                    statusEl.innerText = "Auto-submit failed. Please use manual button.";
+                    statusEl.className = "mt-4 text-[10px] font-bold text-red-500 uppercase italic";
+                } else {
+                    btn.innerText = "Retry Process";
+                    btn.disabled = false;
+                    alert("Submission failed. Check your connection.");
+                }
+            });
+        }
+
+        function restart() {
+            cur = 0; score = 0; history = []; t = 0;
+            document.getElementById('timer').innerText = "00:00";
+            document.getElementById('auto-status').innerText = "Syncing with server...";
+            document.getElementById('auto-status').className = "mt-4 text-[10px] font-bold text-slate-400 uppercase italic";
+            document.getElementById('submitBtn').innerText = "Manual Submit";
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('submitBtn').className = "bg-orange-500 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest shadow-xl hover:bg-orange-600 transition-all";
+            document.getElementById('res-box').classList.add('hidden');
+            document.getElementById('quiz-box').classList.remove('hidden');
+            startTimer();
+            show();
+        }
+    </script>
+</body>
+</html>
